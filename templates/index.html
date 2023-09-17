@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <!-- Include Alertify JS and CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/alertifyjs/build/css/alertify.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
+    <title>DOCX to PDF Converter</title>
+</head>
+<body>
+    <div class="container">
+        <div class="error-message">
+            {% if error %}
+                <p>{{ error }}</p>
+            {% endif %}
+        </div>
+        <div class="success-message" style="display: none;">
+            <p id="success-message"></p>
+        </div>
+        <h1>DOCX to PDF Converter</h1>
+        <form method="POST" action="/convert" enctype="multipart/form-data">
+            <div class="file-input-container">
+                <label class="custom-file-input">
+                    Choose File
+                    <input type="file" id="file-input" name="docx_file" style="display: none;" onchange="displayFileName()">
+                </label>
+            <span id="file-name">No file selected</span>
+            </div>
+            <input type="submit" value="Convert to PDF">
+        </form>
+    </div>
+    <script>
+        // Function to display the selected file name
+        function displayFileName() {
+            var fileInput = document.getElementById('file-input');
+            var fileNameSpan = document.getElementById('file-name');
+            
+            // Update the span with the selected file name or "No file selected" if no file is chosen
+            fileNameSpan.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : 'No file selected';
+        }
+        function showDownloadAlert() {
+            alertify.success('Download Started!');
+        }
+    </script>
+</body>
+</html>
